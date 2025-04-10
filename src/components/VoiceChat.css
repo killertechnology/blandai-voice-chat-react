@@ -1,0 +1,186 @@
+/* VoiceChat.css */
+
+/* Outer card container */
+.voice-card {
+  max-width: 600px;
+  margin: 0 auto;
+  height: 80vh;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Card header */
+.voice-card-header {
+  padding: 16px;
+  position: relative;
+  text-align: center;
+}
+
+.voice-card-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #1e3a8a, #000);
+  opacity: 0.5;
+}
+
+.voice-title {
+  position: relative;
+  font-size: 24px;
+  font-weight: 300;
+  color: white;
+}
+
+/* Loader icon style */
+.loader {
+  margin-left: 8px;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Card content */
+.voice-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: calc(100% - 60px);
+  padding: 0 16px;
+}
+
+/* Status text */
+.status-text {
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  transition: color 0.3s;
+}
+
+/* Button group container */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Mic button */
+.mic-button {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.mic-button:hover {
+  transform: scale(1.05);
+}
+
+/* Pulse animation when listening */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.mic-button.listening {
+  animation: pulse 1s infinite;
+}
+
+/* Connection Status Button */
+.connection-status-button {
+  width: 160px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background-color 0.3s;
+}
+
+.connection-status-button.connected {
+  background-color: green;
+}
+
+.connection-status-button.disconnected {
+  background-color: red;
+}
+
+/* Ready status text */
+.ready-status {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ready-text {
+  display: flex;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+/* Error message styling */
+.error-text {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #f87171;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Icon styling */
+.mic-icon {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+.wifi-icon {
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .voice-card {
+    width: 100%;
+    height: 90vh;
+    border-radius: 0;
+  }
+  .voice-title {
+    font-size: 20px;
+  }
+  .mic-button {
+    width: 96px;
+    height: 96px;
+  }
+  .connection-status-button {
+    width: 140px;
+    height: 40px;
+    font-size: 14px;
+  }
+}

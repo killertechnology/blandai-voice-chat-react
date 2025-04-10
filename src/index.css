@@ -1,0 +1,249 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    /* background-image: url('images/newcircus.gif');  */
+     background-size: 10%;
+     background-repeat: no-repeat;
+     background-position: -65px -120px;
+     background: linear-gradient(to right, #000000, #488dbb); /* green gradient */
+     padding:15px;
+ }
+ 
+.my-4-img {
+    width: 280px;
+    padding: 2px;
+    z-index: 99;
+    position: fixed;
+}
+
+h1 {
+    line-height: 10pt;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    text-shadow: 3px 3px 3px black;
+}
+
+.bubbly-button {
+    background: linear-gradient(to right, #68d391, #48bb78); /* green gradient */
+    color: white;
+    padding: 22px 34px;
+    border: none;
+    border-radius: 9999px; /* fully rounded */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .bubbly-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.12);
+  }
+
+  
+
+.hotdogpage {
+    text-align: center;
+    width: 100%;
+    padding-top: 193px;
+}
+
+.myroot {
+   
+}
+
+.mythumbs {
+    width: 80px;
+    padding: 2px;
+}
+
+.my-4-selected {
+    width: 100%;
+    text-align: center;
+}
+
+.my-4 {
+    width: 400px;
+    text-align: center;
+}
+
+.result-hotdog {
+    font-size: 34pt;
+    font-weight: bolder;
+    position: fixed;
+    top: 120px;
+    color: rgb(1, 184, 59);
+    text-shadow: 2px 2px 2px black;
+}
+
+.mb-8 {
+    font-size: 16pt;
+    font-weight: bolder;
+    top: 134px;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    
+}
+
+input {
+    font-size: 10pt;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 2px black;
+}
+
+.hotdogsheet {
+    text-align: center;
+    padding: 0px;
+    width: 350px;
+}
+
+/* Container to hold the primary image and overlay */
+.container {
+    position: relative;
+    height: 69px;
+    margin: 0px auto; /* centers the container on the page */
+    border: 0px solid #ccc;
+}
+/* The primary image */
+.primary-image {
+    width: 350px;
+}
+/* The overlay div */
+.overlay {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* allows clicks to pass through to the image */
+}
+/* Ensure the checkmark image fills its container */
+.overlay img {
+    width: 30%;
+}
+
+.overlay div {
+    width: 100%;
+}
+
+/* Desktop background transparency adjustment */
+@media (min-width: 650px) {
+  /* Remove the regular background from body */
+  
+  /* Add a pseudo-element with the background at 60% transparency */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: url('images/newcircus.gif') no-repeat center center, #f2e663; */
+    background-size: 130%;
+    background-position: -165px -250px;
+    opacity: 0.8;
+    z-index: -1;
+  }
+}
+
+.centered-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(55, 65, 81, 0.5); /* equivalent to bg-gray-700 bg-opacity-50 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+} 
+
+.gradient-bg {
+  background: linear-gradient(135deg, #a8a8a8 0%, #fefefe 100%);
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.audio-wave {
+  animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); }
+} 
