@@ -9,7 +9,7 @@ body {
      background-repeat: no-repeat;
      background-position: -65px -120px;
      background: linear-gradient(to right, #000000, #488dbb); /* green gradient */
-     padding:15px;
+     padding:10px;
      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
  }
  

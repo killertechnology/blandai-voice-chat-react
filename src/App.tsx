@@ -84,10 +84,10 @@ function App() {
       >
         <div style={{ textAlign: "center", color: "white", width: "100%", maxWidth: "600px" }}>
           <h1 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}>
-            Welcome to the Voice Chat Tool
+            Talk To Me!
           </h1>
           <p style={{ marginBottom: "1rem" }}>
-            <br />Please select a persona for your session:
+            Welcome to the friendly AI voice chat!<br /><br />Activate a persona to get started:
           </p>
           <select
             value={selectedPersona?.label || ''}

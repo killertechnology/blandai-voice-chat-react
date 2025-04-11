@@ -1,5 +1,15 @@
 /* VoiceChat.css */
+p {
+  color:white;
+  line-height: 1.0em;
+}
 
+
+h2 {
+  font-size: 18pt;
+  color:white;
+  line-height:25px;
+}
 /* Outer card container */
 .voice-card {
   max-width: 600px;
@@ -15,12 +25,12 @@
 .persona-info {
   text-align: left;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
   color: white;
 }
 .persona-info h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .persona-info p {
   margin: 4px 0;
@@ -29,7 +39,7 @@
 
 /* Card header */
 .voice-card-header {
-  padding: 16px;
+  padding: 1px;
   position: relative;
   text-align: center;
 }
@@ -55,17 +65,17 @@
 /* Persona info */
 .persona-info {
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   color: white;
 }
 
 .persona-info h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .persona-info p {
-  margin: 4px 0;
+  margin: 2px 0;
   font-size: 1rem;
 }
 

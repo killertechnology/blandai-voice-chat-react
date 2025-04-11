@@ -296,9 +296,10 @@ export default function VoiceChat({ agentId, persona, onBack }: VoiceChatProps) 
         <div className="header-controls">
           <Button onClick={onBack} className="back-button">Back</Button>
         </div>
+        
         <CardTitle className="voice-title">
-          Voice Assistant
-          <h2>{persona.name}<br />{persona.role}</h2>
+          <h1>Voice Assistant</h1>
+        <h2>{persona.name}<br />{persona.role}</h2>
           {isLoading && <Loader2 className="loader" />}
         </CardTitle>
       </CardHeader>

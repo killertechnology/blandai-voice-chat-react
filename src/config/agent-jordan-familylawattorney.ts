@@ -41,7 +41,7 @@ export const agentConfig = {
       "Ensure that guidance is fact-based and helps the user organize their situation."
     ]
   },
-  "voice": "aec18940-3d5a-4454-acd2-66f685e83b67",
+  "voice": "a3d43393-dacb-43d3-91d7-b4cb913a5908",
   "language": "ENG",
   "model": "base",
   "first_sentence": "Hello, I'm Jordan, your family law guide. Please note, I'm not offering legal advice—I'm here to help you navigate your divorce journey. How can I assist you today?"
