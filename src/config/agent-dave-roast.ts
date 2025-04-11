@@ -48,5 +48,5 @@ export const agentConfig = {
     first_sentence: "Hello! I'm Dave, your AI assistant. How may I help you today?"
   } as const;
   
-  export type AgentConfig = typeof agentConfig;
+export default agentConfig;
   

@@ -6,4 +6,6 @@ export function getEnvVar(key: string): string {
   return value
 }
 
-export const BLAND_API_KEY = getEnvVar('BLAND_API_KEY') 
+
+
+export const BLAND_API_KEY = getEnvVar('REACT_APP_BLAND_API_KEY') 

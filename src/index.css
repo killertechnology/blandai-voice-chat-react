@@ -10,6 +10,7 @@ body {
      background-position: -65px -120px;
      background: linear-gradient(to right, #000000, #488dbb); /* green gradient */
      padding:15px;
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
  }
  
 .my-4-img {

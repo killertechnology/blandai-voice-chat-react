@@ -12,6 +12,20 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.persona-info {
+  text-align: left;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: white;
+}
+.persona-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.persona-info p {
+  margin: 4px 0;
+  font-size: 1rem;
+}
 
 /* Card header */
 .voice-card-header {
@@ -19,6 +33,43 @@
   position: relative;
   text-align: center;
 }
+/* VoiceChat.css */
+
+/* Header controls (back button container) */
+.header-controls {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.back-button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Persona info */
+.persona-info {
+  text-align: left;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.persona-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.persona-info p {
+  margin: 4px 0;
+  font-size: 1rem;
+}
+
+/* (Include your existing styles for .voice-card, .mic-button, .listening, etc.) */
 
 .voice-card-header-bg {
   position: absolute;
@@ -56,7 +107,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  height: calc(100% - 60px);
+  
   padding: 0 16px;
 }
 

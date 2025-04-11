@@ -1,6 +1,6 @@
-import { agentConfig } from '../config/agent-config';
+import { agentConfig } from '../config/agent-alex-familytherapist';
 
-const BLAND_API_KEY = process.env.NEXT_PUBLIC_BLAND_API_KEY!;
+const BLAND_API_KEY = process.env.REACT_APP_BLAND_API_KEY!;
 const BLAND_API_URL = 'https://api.bland.ai';
 //const BLAND_WEB_URL = 'https://web.bland.ai';
 

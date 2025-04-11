@@ -5,17 +5,26 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Mic, MicOff, Loader2, WifiOff } from 'lucide-react';
 import { BlandWebClient } from 'bland-client-js-sdk';
 import { getSessionToken } from '../api/agent';
-import { agentConfig } from '../config/agent-config';
 import './VoiceChat.css';
 
-interface VoiceChatProps {
-  agentId: string;
+// Export the Persona interface so that other modules can use it.
+export interface Persona {
+  name: string;
+  role: string;
+  objective: string;
+  personalityTraits: {
+    core: string[];
+    style: string[];
+  };
 }
 
-// Obtain your Bland.AI API key from environment variables.
-const BLAND_API_KEY = process.env.NEXT_PUBLIC_BLAND_API_KEY as string;
+export interface VoiceChatProps {
+  agentId: string;
+  persona: Persona;
+  onBack: () => void;
+}
 
-export default function VoiceChat({ agentId }: VoiceChatProps) {
+export default function VoiceChat({ agentId, persona, onBack }: VoiceChatProps) {
   const [status, setStatus] = useState<string>('Idle');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,7 +53,7 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript;
       console.log('Recognized speech:', transcript);
-      // Here you can forward the transcript to your agent conversation.
+      // Forward transcript to your agent conversation as needed.
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
@@ -146,7 +155,6 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
       return;
     }
 
-    // Cleanup any previous session.
     await cleanup();
     setStatus('Initializing...');
     setError(null);
@@ -166,8 +174,7 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
         callId: currentCallId,
       });
       setIsConnected(true);
-
-      // Attach an onclose handler to the underlying stream to monitor when the call ends.
+      // Attach an onclose handler to update state when the stream ends.
       const wsInstance =
         (clientRef.current as any)._ws ||
         (clientRef.current as any).ws ||
@@ -179,11 +186,9 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
           setStatus('Disconnected!');
         };
       }
-
       setStatus("Connected! Please wait for the agent to finish speaking...");
       await waitForSpeechToFinish();
       setStatus('Connected! Click the mic to speak.');
-      // Do not auto-start speech recognition.
     } catch (err) {
       console.error('Voice chat error:', err);
       setError(err instanceof Error ? err.message : 'Failed to connect to voice chat');
@@ -198,7 +203,7 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
   // Toggle Microphone (Speech Recognition)
   // ----------------------------
   const handleMicToggle = async () => {
-    if (!isConnected) return; // Do nothing if not connected.
+    if (!isConnected) return;
     if (!isListening) {
       if (recognitionRef.current) {
         try {
@@ -221,20 +226,18 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
   // Disconnect Handler: Delete the agent and terminate the call.
   // ----------------------------
   const handleDisconnect = async () => {
-    // Abort speech recognition.
     if (recognitionRef.current) {
       recognitionRef.current.abort();
       setIsListening(false);
     }
-    // Cancel any ongoing TTS.
     window.speechSynthesis.cancel();
 
-    // Delete the web agent via the Bland.AI API.
+    // Delete the agent via Bland.AI API.
     try {
       const options = {
         method: 'POST',
         headers: {
-          authorization: BLAND_API_KEY,
+          authorization: process.env.REACT_APP_BLAND_API_KEY as string,
           'Content-Type': 'application/json'
         }
       };
@@ -244,10 +247,19 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
       console.log('Agent deletion response:', result);
     } catch (deleteError) {
       console.error('Error deleting agent:', deleteError);
-      // Optionally set error state if deletion is critical.
     }
 
-    // Force disconnect internal resources.
+    // Force close the internal WebSocket if needed.
+    if (clientRef.current) {
+      const wsInstance =
+        (clientRef.current as any)._ws ||
+        (clientRef.current as any).ws ||
+        (clientRef.current as any).webSocket;
+      if (wsInstance && wsInstance.readyState !== WebSocket.CLOSED) {
+        console.log('Force closing websocket.');
+        wsInstance.close(1000, 'User disconnected (forced)');
+      }
+    }
     await cleanup();
   };
 
@@ -281,12 +293,24 @@ export default function VoiceChat({ agentId }: VoiceChatProps) {
     <Card className="voice-card">
       <CardHeader className="voice-card-header">
         <div className="voice-card-header-bg"></div>
+        <div className="header-controls">
+          <Button onClick={onBack} className="back-button">Back</Button>
+        </div>
         <CardTitle className="voice-title">
           Voice Assistant
+          <h2>{persona.name}<br />{persona.role}</h2>
           {isLoading && <Loader2 className="loader" />}
         </CardTitle>
       </CardHeader>
       <CardContent className="voice-card-content">
+        {/* Persona Information */}
+        <div className="persona-info">
+          
+          <p><strong>Objective:<br /></strong> {persona.objective}</p><br />
+          <p><strong>Core Traits:<br /></strong> {persona.personalityTraits.core.join(', ')}</p><br />
+          <p><strong>Style:<br /></strong> {persona.personalityTraits.style.join(', ')}</p>
+        </div>
+
         {/* Connection Status Button */}
         <Button
           onClick={isConnected ? handleDisconnect : () => {}}
