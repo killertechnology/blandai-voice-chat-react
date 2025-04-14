@@ -15,9 +15,10 @@ function App() {
   const [started, setStarted] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Dynamically load all agent configuration files matching "agent-*.js" or "agent-*.ts"
+  // Dynamically load all agent configuration files matching "agent-*.js" or "agent-*.ts" from the config folder.
   useEffect(() => {
     try {
+      // Use a case-insensitive regex to load both .js and .ts files.
       const context = require.context('./config', false, /^\.\/agent-.*\.(js|ts)$/i);
       console.log('Loaded configuration keys:', context.keys());
       const loaded: (LoadedPersona | null)[] = context.keys().map((key: string) => {
@@ -28,9 +29,10 @@ function App() {
           return null;
         }
         return {
-          label: config.prompt.role, // Use role for dropdown option text.
+          // Use role for display in the grid.
+          label: config.prompt.role,
           id: config.prompt.name.toLowerCase().replace(/\s/g, '-'),
-          ...config.prompt, // Spread the prompt properties for convenience.
+          ...config.prompt, // Spread prompt properties for convenience.
           config // Save the complete configuration.
         };
       });
@@ -45,17 +47,23 @@ function App() {
     }
   }, []);
 
-  // Create a new agent using the selected persona's configuration.
-  const createNewAgent = async () => {
-    if (!selectedPersona) {
+  // Create a new agent using a provided configuration (if passed) or the selectedPersona's configuration.
+  const createNewAgent = async (configOverride?: any) => {
+    const configToUse = configOverride || selectedPersona?.config;
+    if (!configToUse) {
       setError('No persona selected');
       return;
     }
     try {
       const agentModule = await import('./api/agent');
       const { createWebAgent } = agentModule;
-      const result = await createWebAgent(selectedPersona.config);
-      const newId = result.agent?.agent_id || result.agent?.id || result.agent_id || result.id;
+      const result = await createWebAgent(configToUse);
+      // Attempt to extract the new agent's ID from either the nested "agent" property or the root.
+      const newId =
+        result.agent?.agent_id ||
+        result.agent?.id ||
+        result.agent_id ||
+        result.id;
       if (!newId) {
         throw new Error('Agent ID not returned from API.');
       }
@@ -66,8 +74,7 @@ function App() {
     }
   };
 
-  // Landing page: show persona selection and "Get Started" button,
-  // with content positioned 100px below the top.
+  // Landing page with a two-column grid of images.
   if (!started) {
     return (
       <div
@@ -77,57 +84,56 @@ function App() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          paddingTop: "10px",
           paddingLeft: "1rem",
-          paddingTop: "50px",
           paddingRight: "1rem"
         }}
       >
-        <div style={{ textAlign: "center", color: "white", width: "100%", maxWidth: "600px" }}>
-          <h1 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}>
+        <div style={{ textAlign: "center", color: "white", maxWidth: "800px", width: "100%" }}>
+          <h1 >
             Talk To Me!
           </h1>
           <p style={{ marginBottom: "1rem" }}>
-            Welcome to the friendly AI voice chat!<br /><br />Activate a persona to get started:
+            Please select a persona for your session:
           </p>
-          <select
-            value={selectedPersona?.label || ''}
-            onChange={(e) => {
-              const persona = personas.find(p => p.label === e.target.value);
-              if (persona) setSelectedPersona(persona);
-            }}
+          {/* Two-column grid for persona selection */}
+          <div
             style={{
-              padding: "0.5rem",
-              borderRadius: "4px",
-              marginBottom: "1rem",
-              fontSize: "1rem",
-              width: "100%",
-              maxWidth: "400px"
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "16px",
+              justifyItems: "center",
+              alignItems: "center",
+              marginBottom: "1rem"
             }}
           >
             {personas.map((p, idx) => (
-              <option key={idx} value={p.label}>
-                {p.role} {/* Display the role */}
-              </option>
+              <div
+                key={idx}
+                style={{
+                  cursor: "pointer",
+                  textAlign: "center",
+                  width: "100%",
+                  maxWidth: "200px"
+                }}
+                onClick={async () => {
+                  // Immediately use the clicked persona's configuration
+                  setSelectedPersona(p);
+                  await createNewAgent(p.config);
+                  setStarted(true);
+                }}
+              >
+                <img
+                  src={`./images/agent-${idx + 1}.gif`}
+                  alt={p.role}
+                  style={{ width: "100%", borderRadius: "8px" }}
+                />
+                <p style={{ marginTop: "8px", color: "white", fontSize: "1rem" }}>
+                  {p.role}
+                </p>
+              </div>
             ))}
-          </select>
-          <br />
-          <button
-            onClick={async () => {
-              await createNewAgent();
-              setStarted(true);
-            }}
-            style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: "1rem",
-              background: "#3b82f6",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              color: "white"
-            }}
-          >
-            Get Started
-          </button>
+          </div>
           {error && (
             <p style={{ color: "red", marginTop: "1rem" }}>
               {error}
